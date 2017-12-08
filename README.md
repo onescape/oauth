@@ -199,5 +199,5 @@ The Solarzon API is an interface for querying information from and enacting chan
 You can check a document to the following URL:
 
 ```markdown
-https://swaggerhub.com/apis/onescape/api/v1
+https://swaggerhub.com/apis/onescape/solarzon/v1
 ```
