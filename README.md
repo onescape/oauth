@@ -1,6 +1,4 @@
-# OAuth
-
-## The OAuth Flow
+# The OAuth Flow
 
 We uses OAuth 2.0's authorization code grant flow to issue access tokens on behalf of users.
 
@@ -10,7 +8,7 @@ Your web or mobile app should redirect users to the following URL:
 https://onescape.auth.ap-northeast-2.amazoncognito.com
 ```
 
-### Step 1 - Sending users to authorize and/or install
+## Step 1 - Sending users to authorize and/or install
 
 The /oauth2/authorize endpoint signs the user in.
 
@@ -27,13 +25,13 @@ The following values should be passed as GET parameters:
 - redirect_uri (Required): The URL to which the authentication server redirects the browser after authorization has been granted by the user. Must have been pre-registered with a client.
 - state (Optional but strongly recommended): An opaque value the clients adds to the initial request. The authorization server includes this value when redirecting back to the client. This value must be used by the client to prevent CSRF attacks.
 
-### Step 2 - Users are redirected to your server with a verification code
+## Step 2 - Users are redirected to your server with a verification code
 
 If the user authorizes your app, We will redirect back to your specified redirect_uri with a temporary code in a code GET parameter, as well as a state parameter if you provided one in the previous step. If the states don't match, the request may have been created by a third party and you should abort the process.
 
 Authorization codes may only be exchanged once and expire 10 minutes after issuance.
 
-#### Examples of Positive Requests
+### Examples of Positive Requests
 
 Sample Request: Authorization code grant request
 
@@ -54,7 +52,7 @@ HTTP/1.1 302 Found
 Location: https://REDIRECT_URI?code=AUTHORIZATION_CODE&state=STATE
 ```
 
-#### Examples of Negative Requests
+### Examples of Negative Requests
 
 The following are examples of negative requests:
 
@@ -79,7 +77,7 @@ If there is any unexpected error in the server, the authentication server should
 HTTP 1.1 302 Found Location: https://REDIRECT_URI?error=server_error
 ```
 
-### Step 3 - Exchanging a verification code for an access token
+## Step 3 - Exchanging a verification code for an access token
 
 The /oauth2/token endpoint gets the user's tokens.
 
@@ -104,7 +102,7 @@ Request Parameters in Body
 - redirect_uri (Required only if grant_type is authorization_code): Must be the same redirect_uri that was used to get authorization_code in /oauth2/authorize.
 - refresh_token (Required if grant_type is refresh_token): The refresh token.
 
-#### Examples of Positive Requests
+### Examples of Positive Requests
 
 Sample Request: Exchanging authorization code for tokens
 
@@ -158,7 +156,7 @@ Content-Type: application/json
 }
 ```
 
-#### Examples of Negative Requests
+### Examples of Negative Requests
 
 Sample Error Response
 
@@ -177,7 +175,7 @@ Content-Type: application/json;charset=UTF-8
 - unauthorized_client: Client is not allowed for code grant flow or for refreshing tokens.
 - unsupported_grant_type: Returned if grant_type is anything other than authorization_code or refresh_token.
 
-## Using access tokens
+# Using access tokens
 
 The tokens awarded to your app can be used in requests to the API.
 
@@ -194,7 +192,7 @@ Authorization: Bearer ACCESS_TOKEN
 
 This approach is required when using application/json with a write method.
 
-### Solarzon API
+## Solarzon API
 
 The Solarzon API is an interface for querying information from and enacting change in a Solarzon device.
 
