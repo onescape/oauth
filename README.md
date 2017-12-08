@@ -192,6 +192,10 @@ Authorization: Bearer ACCESS_TOKEN
 
 This approach is required when using application/json with a write method.
 
+![alt text](https://github.com/chocobook/hello/blob/master/swaggerhub.jpeg?raw=true)
+
+![alt text](https://github.com/chocobook/hello/blob/master/postman.jpeg?raw=true)
+
 ## Solarzon API
 
 The Solarzon API is an interface for querying information from and enacting change in a Solarzon device.
