@@ -25,15 +25,9 @@ The following values should be passed as GET parameters:
 - redirect_uri (Required): The URL to which the authentication server redirects the browser after authorization has been granted by the user. Must have been pre-registered with a client.
 - state (Optional but strongly recommended): An opaque value the clients adds to the initial request. The authorization server includes this value when redirecting back to the client. This value must be used by the client to prevent CSRF attacks.
 
-## Step 2 - Users are redirected to your server with a verification code
+### Sample Request
 
-If the user authorizes your app, We will redirect back to your specified redirect_uri with a temporary code in a code GET parameter, as well as a state parameter if you provided one in the previous step. If the states don't match, the request may have been created by a third party and you should abort the process.
-
-Authorization codes may only be exchanged once and expire 10 minutes after issuance.
-
-### Examples of Positive Requests
-
-Sample Request: Authorization code grant request
+Authorization code grant request
 
 ```markdown
 GET https://onescape.auth.ap-northeast-2.amazoncognito.com/oauth2/authorize?
@@ -43,7 +37,13 @@ redirect_uri=https://REDIRECT_URI&
 state=STATE&
 ```
 
-Sample Response
+## Step 2 - Users are redirected to your server with a verification code
+
+If the user authorizes your app, We will redirect back to your specified redirect_uri with a temporary code in a code GET parameter, as well as a state parameter if you provided one in the previous step. If the states don't match, the request may have been created by a third party and you should abort the process.
+
+Authorization codes may only be exchanged once and expire 10 minutes after issuance.
+
+### Sample Response of Positive Requests
 
 The authentication server redirects back to your app with the authorization code and state. The code and state must be returned in the query string parameters and not in the fragment. A query string is the part of a web request that appears after a '?' character; the string can contain one or more parameters separated by '&' characters. A fragment is the part of a web request that appears after a '#' character to specify a subsection of a document.
 
@@ -52,7 +52,7 @@ HTTP/1.1 302 Found
 Location: https://REDIRECT_URI?code=AUTHORIZATION_CODE&state=STATE
 ```
 
-### Examples of Negative Requests
+### Sample Response of Negative Requests
 
 The following are examples of negative requests:
 
@@ -102,9 +102,9 @@ Request Parameters in Body
 - redirect_uri (Required only if grant_type is authorization_code): Must be the same redirect_uri that was used to get authorization_code in /oauth2/authorize.
 - refresh_token (Required if grant_type is refresh_token): The refresh token.
 
-### Examples of Positive Requests
+### Example of exchanging authorization code for tokens
 
-Sample Request: Exchanging authorization code for tokens
+Sample Request
 
 ```markdown
 POST https://onescape.auth.ap-northeast-2.amazoncognito.com/oauth2/token >
@@ -131,7 +131,26 @@ Content-Type: application/json
 }
 ```
 
-Sample Request: Exchanging refresh token for tokens
+Sample Error Response
+
+```markdown
+HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+
+{
+"error":"invalid_request|invalid_client|invalid_grant|unauthorized_client|unsupported_grant_type|"
+}
+```
+
+- invalid_request: The request is missing a required parameter, includes an unsupported parameter value (other than unsupported_grant_type), or is otherwise malformed. For example, grant_type is refresh_token but refresh_token is not included.
+- invalid_client: Client authentication failed. For example, when the client includes client_id and client_secret in the authorization header, but there's no such client with that client_id and client_secret.
+- invalid_grant: Refresh token has been revoked. Authorization code has been consumed already or does not exist.
+- unauthorized_client: Client is not allowed for code grant flow or for refreshing tokens.
+- unsupported_grant_type: Returned if grant_type is anything other than authorization_code or refresh_token.
+
+### Example of exchanging refresh token for tokens
+
+Sample Request
 
 ```markdown
 POST https://onescape.auth.ap-northeast-2.amazoncognito.com/oauth2/token >
@@ -156,31 +175,12 @@ Content-Type: application/json
 }
 ```
 
-### Examples of Negative Requests
-
-Sample Error Response
-
-```markdown
-HTTP/1.1 400 Bad Request
-Content-Type: application/json;charset=UTF-8
-
-{
-"error":"invalid_request|invalid_client|invalid_grant|unauthorized_client|unsupported_grant_type|"
-}
-```
-
-- invalid_request: The request is missing a required parameter, includes an unsupported parameter value (other than unsupported_grant_type), or is otherwise malformed. For example, grant_type is refresh_token but refresh_token is not included.
-- invalid_client: Client authentication failed. For example, when the client includes client_id and client_secret in the authorization header, but there's no such client with that client_id and client_secret.
-- invalid_grant: Refresh token has been revoked. Authorization code has been consumed already or does not exist.
-- unauthorized_client: Client is not allowed for code grant flow or for refreshing tokens.
-- unsupported_grant_type: Returned if grant_type is anything other than authorization_code or refresh_token.
-
 # Using access tokens
 
 The tokens awarded to your app can be used in requests to the API.
 
 ```markdown
-https://61z5hoawji.execute-api.ap-northeast-2.amazonaws.com/v1
+https://api.onescape.io
 ```
 
 The best way to communicate your access tokens, also known as bearer tokens, is by presenting them in a request's Authorization HTTP header:
