@@ -25,9 +25,9 @@ The following values should be passed as GET parameters:
 - redirect_uri (Required): The URL to which the authentication server redirects the browser after authorization has been granted by the user. Must have been pre-registered with a client.
 - state (Optional but strongly recommended): An opaque value the clients adds to the initial request. The authorization server includes this value when redirecting back to the client. This value must be used by the client to prevent CSRF attacks.
 
-### Sample Request
+### Sample request
 
-Authorization code grant request
+Authorization Code Grant Request
 
 ```markdown
 GET https://onescape.auth.ap-northeast-2.amazoncognito.com/oauth2/authorize?
@@ -43,7 +43,7 @@ If the user authorizes your app, We will redirect back to your specified redirec
 
 Authorization codes may only be exchanged once and expire 10 minutes after issuance.
 
-### Sample Response of Positive Requests
+### Sample response of positive requests
 
 The authentication server redirects back to your app with the authorization code and state. The code and state must be returned in the query string parameters and not in the fragment. A query string is the part of a web request that appears after a '?' character; the string can contain one or more parameters separated by '&' characters. A fragment is the part of a web request that appears after a '#' character to specify a subsection of a document.
 
@@ -52,7 +52,7 @@ HTTP/1.1 302 Found
 Location: https://REDIRECT_URI?code=AUTHORIZATION_CODE&state=STATE
 ```
 
-### Sample Response of Negative Requests
+### Sample response of negative requests
 
 The following are examples of negative requests:
 
@@ -117,7 +117,7 @@ code=AUTHORIZATION_CODE&
 redirect_uri=https://REDIRECT_URI
 ```
 
-Sample response
+Sample Response
 
 ```markdown
 HTTP/1.1 200 OK
