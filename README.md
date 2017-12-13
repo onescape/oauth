@@ -178,7 +178,7 @@ Content-Type: application/json
 The tokens awarded to your app can be used in requests to the API.
 
 ```markdown
-https://api.onescape.io
+https://api.onescape.io/SERVICE_NAME
 ```
 
 The best way to communicate your access tokens, also known as bearer tokens, is by presenting them in a request's Authorization HTTP header:
@@ -194,12 +194,3 @@ This approach is required when using application/json with a write method.
 
 ![alt text](https://github.com/onescape/oauth/blob/master/postman.jpeg?raw=true)
 
-## Solarzon API
-
-The Solarzon API is an interface for querying information from and enacting change in a Solarzon device.
-
-You can check a document to the following URL:
-
-```markdown
-https://swaggerhub.com/apis/onescape/solarzon
-```
