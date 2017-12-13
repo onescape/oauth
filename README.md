@@ -37,7 +37,7 @@ redirect_uri=https://REDIRECT_URI&
 state=STATE&
 ```
 
-## Step 2 - Users are redirected to your server with a verification code
+## Step 2 - Users are redirected to your server with a authorization code
 
 If the user authorizes your app, We will redirect back to your specified redirect_uri with a temporary code in a code GET parameter, as well as a state parameter if you provided one in the previous step. If the states don't match, the request may have been created by a third party and you should abort the process.
 
@@ -77,7 +77,7 @@ If there is any unexpected error in the server, the authentication server should
 HTTP 1.1 302 Found Location: https://REDIRECT_URI?error=server_error
 ```
 
-## Step 3 - Exchanging a verification code for an access token
+## Step 3 - Exchanging a authorization code for an access token
 
 The /oauth2/token endpoint gets the user's tokens.
 
@@ -87,19 +87,17 @@ POST /oauth2/token
 
 The /oauth2/token endpoint only supports HTTPS POST. The user pool client makes requests to this endpoint directly and not through the system browser.
 
-Request Parameters
+Request Parameters in Header
 
-```markdown
 - Authorization: If the client was issued a secret, the client must pass its client_id and client_secret in the authorization header through Basic HTTP authorization. The secret is Basic Base64Encode(client_id:client_secret).
-- code: Required if grant_type is authorization_code.
 - Content-Type: Must always be 'application/x-www-form-urlencoded'.
-```
 
 Request Parameters in Body
 
 - grant_type (Required): Grant type. Must be authorization_code or refresh_token
 - client_id (Required): Client ID. Must be a preregistered client in the user pool. The client must be enabled for Amazon Cognito federation. 
 - redirect_uri (Required only if grant_type is authorization_code): Must be the same redirect_uri that was used to get authorization_code in /oauth2/authorize.
+- code (Required if grant_type is authorization_code): The authorization code.
 - refresh_token (Required if grant_type is refresh_token): The refresh token.
 
 ### Example of exchanging authorization code for tokens
