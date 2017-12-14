@@ -41,8 +41,6 @@ state=STATE&
 
 If the user authorizes your app, We will redirect back to your specified redirect_uri with a temporary code in a code GET parameter, as well as a state parameter if you provided one in the previous step. If the states don't match, the request may have been created by a third party and you should abort the process.
 
-Authorization codes may only be exchanged once and expire 10 minutes after issuance.
-
 ### Sample response of positive requests
 
 The authentication server redirects back to your app with the authorization code and state. The code and state must be returned in the query string parameters and not in the fragment. A query string is the part of a web request that appears after a '?' character; the string can contain one or more parameters separated by '&' characters. A fragment is the part of a web request that appears after a '#' character to specify a subsection of a document.
@@ -136,7 +134,7 @@ HTTP/1.1 400 Bad Request
 Content-Type: application/json;charset=UTF-8
 
 {
-"error":"invalid_request|invalid_client|invalid_grant|unauthorized_client|unsupported_grant_type|"
+    "error":"invalid_request|invalid_client|invalid_grant|unauthorized_client|unsupported_grant_type|"
 }
 ```
 
@@ -153,7 +151,7 @@ Sample Request
 ```markdown
 POST https://onescape.auth.ap-northeast-2.amazoncognito.com/oauth2/token >
 Content-Type='application/x-www-form-urlencoded'
-Authorization=Basic ENCODED_CLIENT
+Authorization=Basic ENCODED_CLIENT_ID_AND_CLIENT_SECRET
 
 grant_type=refresh_token&
 client_id=CLIENT_ID&
