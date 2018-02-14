@@ -188,6 +188,8 @@ Authorization: Bearer ACCESS_TOKEN
 
 This approach is required when using application/json with a write method.
 
+### Sample screenshot
+
 ![alt text](https://github.com/onescape/oauth/blob/master/swaggerhub.jpeg?raw=true)
 
 ![alt text](https://github.com/onescape/oauth/blob/master/postman.jpeg?raw=true)
